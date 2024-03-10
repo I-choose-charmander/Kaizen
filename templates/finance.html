@@ -1,0 +1,18 @@
+{% extends "users/base.html" %}
+{% block content %}
+    <h1>
+        Budget Calculator
+    </h1>
+    <body>
+        <div>
+            <form action="{% url 'f_results' %}">
+                <label for="Monthly Budget Breakdown">Monthly Income</label> <br/>
+                <input type="number" name="inc"> <br/>
+                <button  type="submit" name="breakdown">Calculate</button> <br/>
+            </form>
+        </div>
+
+    </body>
+    
+{% endblock content %}
+ 

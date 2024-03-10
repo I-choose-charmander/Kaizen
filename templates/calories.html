@@ -1,0 +1,32 @@
+{% extends "users/base.html" %}
+{% block title %} Faii-Zen {% endblock title%}
+{% block content %}
+    <body>
+       <section id="calorie">
+        <div id="cal_table">
+            <article>
+                <fieldset>
+                    <legend>
+                        Calorie Counter
+                    </legend>
+                    <form action="{% url 'c_results' %}">
+                        <input type="number" name="protien">
+                        <label for="height">How much protien per this meal?</label><br>
+                        <input type="number" name="fat">
+                        <label for="height">How much fat per this meal?</label><br>
+                        <input type="number" name="carb">
+                        <label for="height">How much carbs per this meal?</label><br>
+                        <div class="container">
+                            <h5>Save meal to profilex</h5>
+                            <label class="switch" for="checkbox">
+                            <input type="checkbox" name="checkbox"/>
+                            </label>
+                        </div>
+                        <button  type="submit" name="breakdown"> Submit</button> <br/>
+                    </form>
+                </fieldset>
+            </article>
+        </div>
+    </section>
+    </body>
+{% endblock content %}

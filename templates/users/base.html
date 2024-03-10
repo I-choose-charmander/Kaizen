@@ -1,0 +1,25 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <title>{% block title %}Faii-Zen{% endblock %} </title>
+</head>
+<body>
+  <nav>
+    <div id="home">
+        <div class="topdiv">
+            <a class="topdiv" href="{% url 'home' %}">Home</a>
+            <a class="topdiv" href="{% url 'finance' %}">Finance</a>
+            <a class="topdiv" href="{% url 'macro' %}">Macro</a>
+            <a class="topdiv" href="{% url 'calories' %}">Calorie Counter</a>
+            
+        </div>
+    </div>
+</nav> 
+<nav>
+  {% block content %} {% endblock content %}
+
+</body>
+<footer>
+  Made by Faii
+</footer>
+</html>

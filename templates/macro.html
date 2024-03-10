@@ -1,0 +1,39 @@
+{% extends "users/base.html" %}
+{% block title %} Faii-Zen {% endblock title%}
+{% block content %}
+    <head>
+       
+        <title>BMR & Macros</title>
+    </head>
+    <body>
+        <section id="macro">
+            <div id="bmr_table">
+                <article>
+                    <fieldset>
+                        <legend>
+                            BMR Macro Calculator
+                        </legend>
+                        <form action="{% url 'm_results' %}">
+                            <input type="number" name="feet">
+                            <label for="height">Height in feet</label><br>
+                            <input type="number" name="inches">
+                            <label for="height">inches</label><br>
+                            <input type="number" name="weight">
+                            <label for="weight">Weight</label><br>
+                            <input type="number" name="age">
+                            <label for="age">Age</label><br>
+                            <div class="container">
+                                <h5>Sex</h5>
+                                <label class="switch" for="checkbox">
+                                <input type="checkbox" name="checkbox" />
+                                <div class="slider round"></div>
+                                </label>
+                            </div>
+                            <button  type="submit" name="breakdown">Calculate</button> <br/>
+                        </form>
+                    </fieldset>
+                </article>
+            </div>
+        </section>
+    </body>
+{% endblock content %}

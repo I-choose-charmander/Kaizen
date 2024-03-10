@@ -1,0 +1,10 @@
+{% extends "users/base.html" %}
+{% block title %} Faii-Zen {% endblock title%}
+{% block content %}
+<div class="center">
+    The results is:
+    <h1>{{ans}}</h1>
+    
+    <a href="{% url 'calories' %}">Return</a>
+</div>
+{% endblock content %}
