@@ -1,16 +1,14 @@
 from django.shortcuts import render, redirect
-from django.http import HttpResponse
+from django.http import HttpResponse, JsonResponse
 from django.template import loader
 from django.contrib import messages
 from django.views import View
-from django.contrib.auth.views import LoginView
-from .forms import RegisterForm, LoginForm
-
-
-
+import os
+from dotenv import load_dotenv
+import requests, json
 # Create your views here.
 
-
+load_dotenv()
 
 def home(request):
     template= loader.get_template('home.html')
@@ -61,9 +59,9 @@ def m_results(request):
             
             ans = 665.1 + (9.563 * kg) + (1.850 * cm) - (4.676 * Age)
             return render(request, 'm_results.html', {'ans': ans})
-        else:
-            ans = 'Error Please try again'
-            return render(request, 'm_results.html', {'ans': ans})
+
+        ans = 'Error Please try again'
+        return render(request, 'm_results.html', {'ans': ans})
 
 def c_results(request):
     cal = 0
@@ -71,9 +69,43 @@ def c_results(request):
     fat = int(request.GET.get('fat'))
     carb = int(request.GET.get('carb'))
     if request.GET.get('breakdown') == "":
-         cal += ((protien * 4) + (fat * 9) + (carb * 4))
-         return render(request, 'c_results.html', {'ans': cal })
+        if not [x for x in (protien,fat,carb) if x == '']:
+            cal += ((protien * 4) + (fat * 9) + (carb * 4))
+            return render(request, 'c_results.html', {'ans': cal })
+        else:
+            cal = 'Error Please try again'
+            return render(request, 'c_results.html', {'ans': cal })
 
-         
-    return render(request, 'c_results.html', {'ans': cal })
+def food(request):
+    return render(request,"Food.html")
 
+def get_api_data(request):
+    query = request.GET.get('food')
+    api_key = os.getenv('API_KEY')
+    app_id = os.getenv('APP_ID')
+    url = "https://trackapi.nutritionix.com/v2/search/instant"
+    headers={
+            'x-app-id': app_id,
+            'x-app-key': api_key,
+                }
+    response = requests.get(url,headers=headers,params={"query": query})
+    if request.GET.get('breakdown') == "":
+        if response.status_code == 200:
+            data = response.json()
+            return render(request, 'display.html', {'data': data})
+        data = 'Request failed with status code {response.status_code}'
+        return render(request, 'display.html', {'data': data})
+
+def stock_api_data(request):
+        ticker = request.POST.get('ticker', 'null')
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey=HASIDZ04KY62WNJD'
+
+        headers = {
+            'x-app-id': "HASIDZ04KY62WNJD",
+        }
+        response = requests.get(url)
+        data = response.json()
+        return render(request, 'display.html',{'data': data})
+
+def stock(request):
+    return render(request,"stock.html")

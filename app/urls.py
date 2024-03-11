@@ -1,7 +1,10 @@
-from django.urls import path
+from django.urls import path,include
 from app import views
-from .views import home, calories, finance,macro,f_results,m_results, c_results
+from .views import home,stock,calories,stock_api_data,food,finance,macro,f_results,m_results, c_results, get_api_data
 from django.conf import settings
+
+
+
 
 
 urlpatterns = [
@@ -12,4 +15,8 @@ urlpatterns = [
     path("m_results/",m_results, name='m_results'),
     path("calories/", calories , name='calories'),
     path("c_results/",c_results, name='c_results'),
+    path('api-data/',get_api_data, name='api-data'),
+    path('food/', food, name='food'),
+    path('stocks/', stock, name='stock'),
+    path('stock-api-data/',stock_api_data, name='stock-api-data'),
 ]  
