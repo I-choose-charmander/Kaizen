@@ -2,13 +2,20 @@
 {% block title %} Faii-Zen {% endblock title%}
 {% block content %}
 <body>
-    <h1>Alpha Vantage API</h1>
-    <ul>
-        <form action="{% url 'stock-api-data' %}">
-            <label>Please enter a stock:</label><br>
-            <input type="text" name="ticker">
-            <button  type="submit"> Submit</button> <br/>
-        </form>
-    </ul>
+    <div style=" background:
+    linear-gradient(
+        105deg,
+        rgb(0 255 255 / 20%) 39%,
+        rgb(51 56 57 / 100%) 96%
+      );">
+        <h1>Alpha Vantage API</h1>
+        <ul>
+            <form action="{% url 'stock-api-data' %}">
+                <label>Please enter a stock:</label><br>
+                <input type="text" name="ticker">
+                <button  type="submit"> Submit</button> <br/>
+            </form>
+        </ul>
+    </div>
 </body>
 {% endblock content %}

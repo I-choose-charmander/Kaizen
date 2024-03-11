@@ -2,13 +2,21 @@
 {% block title %} Faii-Zen {% endblock title%}
 {% block content %}
 <body>
-    <h1>Nuritionix API</h1>
-    <ul>
-        <form action="{% url 'api-data' %}">
-            <input type="text" name="food">
-            <label for="food">Please enter a food name or barcode number:</label><br>
-            <button  type="submit" name="breakdown"> Submit</button> <br/>
-        </form>
-    </ul>
+    <div style=" background:
+    linear-gradient(
+        105deg,
+        rgb(0 255 255 / 20%) 39%,
+        rgb(51 56 57 / 100%) 96%
+      );">
+
+        <h1>Nuritionix API</h1>
+        <ul>
+            <form action="{% url 'api-data' %}" style="text-align:center">
+                <label for="food">Please enter a food name or barcode number:</label><br>
+                <input type="text" name="food">
+                <button  type="submit" name="breakdown"> Submit</button> <br/>
+            </form>
+        </ul>
+    </div>
 </body>
 {% endblock content %}
