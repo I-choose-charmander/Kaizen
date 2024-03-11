@@ -81,8 +81,8 @@ def food(request):
 
 def get_api_data(request):
     query = request.GET.get('food')
-    api_key = os.getenv('API_KEY')
-    app_id = os.getenv('APP_ID')
+    api_key = os.getenv('API_KEY_NIX')
+    app_id = os.getenv('APP_ID_NIX')
     url = "https://trackapi.nutritionix.com/v2/search/instant"
     headers={
             'x-app-id': app_id,
@@ -98,11 +98,8 @@ def get_api_data(request):
 
 def stock_api_data(request):
         ticker = request.POST.get('ticker', 'null')
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey=HASIDZ04KY62WNJD'
-
-        headers = {
-            'x-app-id': "HASIDZ04KY62WNJD",
-        }
+        api_key = os.getenv('API_KEY_AFV')
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey={API_KEY_AFV}'
         response = requests.get(url)
         data = response.json()
         return render(request, 'display.html',{'data': data})
