@@ -99,7 +99,7 @@ def get_api_data(request):
 def stock_api_data(request):
         ticker = request.POST.get('ticker', 'null')
         api_key = os.getenv('API_KEY_AFV')
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey={API_KEY_AFV}'
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey={api_key}'
         response = requests.get(url)
         data = response.json()
         return render(request, 'display.html',{'data': data})
