@@ -6,6 +6,8 @@
         rgb(0 255 255 / 20%) 39%,
         rgb(51 56 57 / 100%) 96%
       )">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
         <h1>
             Budget Calculator
         </h1>
@@ -14,10 +16,30 @@
                 <form action="{% url 'f_results' %}">
                     <label for="Monthly Budget Breakdown">Monthly Income</label> <br/>
                     <input type="number" name="inc"> <br/>
+                    <input type="checkbox" id="showMoreFields" name="showMoreFields">
+                    <label for="showMoreFields">Run extended breakdown?</label>
+
+                        <div id="moreFields" style="display: none;">
+                            <label for="extraField1"> :</label><br>
+                            <input type="text" id="extraField1" name="extraField1"><br>
+                            <label for="extraField2"> 2:</label><br>
+                            <input type="text" id="extraField2" name="extraField2"><br>
+                        </div>
+
                     <button  type="submit" name="breakdown">Calculate</button> <br/>
                 </form>
             </div>
-
+            <script>
+                $(document).ready(function(){
+                    $('#showMoreFields').change(function(){
+                        if(this.checked)
+                            $('#moreFields').fadeIn('slow');
+                        else
+                            $('#moreFields').fadeOut('slow');
+                    });
+                });
+            </script>
+                
         </body>
     </div>
     

@@ -2,8 +2,11 @@
 {% block title %} Faii-Zen {% endblock title%}
 {% block content %}
 <div class="center">
-    The results is:
-    <h1>{{ans}}</h1>
+    Your BMR Calories results is:
+    <h1>{{ans}}</h1> </br>
+
+    Your High to Low Calorie Range(s) are:
+    <h2 style="color:green">{{range}}</h2>
     
     <a href="{% url 'macro' %}">Return</a>
 </div>

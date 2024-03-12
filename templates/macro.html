@@ -7,10 +7,10 @@ linear-gradient(
     rgb(0 255 255 / 20%) 39%,
     rgb(51 56 57 / 100%) 96%
   );">
-    <body>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <body>
         <section id="macro">
             <div id="bmr_table">
-                <article>
                     <fieldset>
                         <legend>
                             BMR Macro Calculator
@@ -25,18 +25,41 @@ linear-gradient(
                             <input type="number" name="age">
                             <label for="age">Age</label><br>
                             <div class="container">
-                                <h5>Sex</h5>
-                                <label class="switch" for="checkbox">
-                                <input type="checkbox" name="checkbox" />
-                                <div class="slider round"></div>
+                                <label class="switch" for="checkbox"> Sex
+                                <input type="checkbox" name="checkbox">
                                 </label>
                             </div>
-                            <button  type="submit" name="breakdown">Calculate</button> <br/>
+                            <label for="showMoreFields">Run extended breakdown?</label>
+                            <input type="checkbox" id="showMoreFields" name="showMoreFields">
+
+                            <div id="moreFields" style="display: none;">
+                                <label for="d_protien"> Daily Protien:</label><br>
+                                <input type="text" id="d_protien" name="d_protien"><br>
+                                <label for="d_carb">Daily Carbohydrates:</label><br>
+                                <input type="text" id="d_carb" name="d_carb"><br>
+                                <label for="d_fat">Daily Fats</label><br>
+                                <input type="text" id="d_fat" name="d_fat"><br>
+                            </div><br/>
+                            
+                            <button  type="submit">Calculate</button> <br/>
                         </form>
                     </fieldset>
-                </article>
+            </div>
+            <div id="moreFields" style="display: none;">
+                <label for="fullmacro">Run extended breakdown on MacroNurtiensts? :</label><br>
+                <input type="checkbox" id="fullmacro" name="fullmacro"><br>
             </div>
         </section>
+        <script>
+            $(document).ready(function(){
+                $('#showMoreFields').change(function(){
+                    if(this.checked)
+                        $('#moreFields').fadeIn('slow');
+                    else
+                        $('#moreFields').fadeOut('slow');
+                });
+            });
+        </script>
     </body>
 </div>
 {% endblock content %}
