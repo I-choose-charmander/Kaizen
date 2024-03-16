@@ -81,7 +81,7 @@ def m_results(request):
             if request.GET.get('checkbox') == "on":
                 ans = round(66.47 + (13.75 * kg) + (5.003 * cm) - (6.755 * Age))
                 if [x for x in (protien,carbs,fats) if x == '']:
-                    return render(request, 'm_results.html', {'ans': ans,'range':macro_range})
+                    return render(request, 'm_results.html', {'ans': ans,'range':macro_range,'new':pro_macro})
                 else:
                     Protien = int(protien)
                     Carb= int(carbs)
@@ -126,6 +126,7 @@ def m_results(request):
                 pro_macro.append(macro_range['Protien Low to High'][0:2])
                 pro_macro.append(macro_range['Carbohydrate Low to High'][0:2])
                 pro_macro.append(macro_range['Fats Low to High'][0:2])
+                return render(request, 'm_results.html', {'ans': ans,'range':macro_range,'new':pro_macro})
 
     ans = 'Error Please try again'
     macro_range= {'Na':0}
