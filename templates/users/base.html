@@ -8,7 +8,7 @@
     <div id="home"  style="border-radius: 25px;
     background: #73AD21;
     padding: 20px;
-    font-size:larger; text-align:center; font-weight:bold; background-color:skyblue" >
+    font-size:larger; text-align:center; font-weight:bold; background-color:skyblue;height:auto; width:auto;" >
         <div class="topdiv">
             <a class="topdiv" href="{% url 'home' %}">Home</a>
             <a class="topdiv" href="{% url 'finance' %}">Finance</a>
@@ -18,11 +18,11 @@
             <a class="topdiv" href="{% url 'stock' %}">Stocks</a>
         </div>
     </div>
-</nav> 
-<nav>
+  </nav> 
   {% block content %} {% endblock content %}
 
 </body>
+<br>
 <footer>
   Made by Faii
 </footer>

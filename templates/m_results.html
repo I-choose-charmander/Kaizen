@@ -3,11 +3,44 @@
 {% block content %}
 <div class="center">
     Your BMR Calories results is:
-    <h1>{{ans}}</h1> </br>
+    <h1>{{ans}} Calories for maintenance</h1> </br>
 
     Your High to Low Calorie Range(s) are:
     <h2 style="color:green">{{range}}</h2>
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<div> 
+    <canvas id="MacroChart"style='height:auto; width:auto;'></canvas>
+</div>
+
+<script>
+    const data = {{new}};
+    const minVal = Math.min(...data);
+    const maxVal = Math.max(...data);
+    const ctx = document.getElementById('MacroChart');
+    new Chart(ctx,{
+        type: 'bar',
+        data: {
+            labels: ['Protien','Fats', 'Carbs'],
+            datasets: [{
+                label: 'Macro-nutrient breakdown',
+                data: {{new}},
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    min: minVal,
+                    max: maxVal
+                }
+            }
+        }
+    });
+</script>
     
     <a href="{% url 'macro' %}">Return</a>
 </div>
+
+
+
 {% endblock content %}

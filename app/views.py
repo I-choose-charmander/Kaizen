@@ -1,14 +1,17 @@
-from django.shortcuts import render, redirect
-from django.http import HttpResponse, JsonResponse
-from django.template import loader
-from django.contrib import messages
-from django.views import View
 import os
-from dotenv import load_dotenv
 import requests, json
+from django.shortcuts import render
+from django.http import HttpResponse
+from django.template import loader
+from django.views.decorators.csrf import csrf_exempt
+from dotenv import load_dotenv
+from .models import macroModel
+
+
 # Create your views here.
 
 load_dotenv()
+DATABASE_ACCESS = True
 
 def home(request):
     template= loader.get_template('home.html')
@@ -67,9 +70,13 @@ def m_results(request):
             fatl = round(Weight * .4)
             fath = round(Weight * .5)
 
-            macro_range = {'Protien Low': protienl,'Protien High': protienh,
-                              'Carbohydrate Low': carbl, 'Carbohydrate High': carbh, 
-                              'Fats Low':fatl, 'Fats High': fath }
+            macro_range = {'Protien Low to High': [protienl,protienh],
+                              'Carbohydrate Low to High': [carbl,  carbh], 
+                              'Fats Low to High': [fatl, fath] }
+            pro_macro = []
+            pro_macro.append(macro_range['Protien Low to High'][0:2])
+            pro_macro.append(macro_range['Carbohydrate Low to High'][0:2])
+            pro_macro.append(macro_range['Fats Low to High'][0:2])
 
             if request.GET.get('checkbox') == "on":
                 ans = round(66.47 + (13.75 * kg) + (5.003 * cm) - (6.755 * Age))
@@ -87,15 +94,19 @@ def m_results(request):
                     daily_fat_low = fatl - Fat
                     daily_fat_high = fath - Fat
                     
-                    macro_range = {'Protien Low': daily_protien_low,'Protien High': daily_protien_high,
-                              'Carbohydrate Low': daily_carb_low, 'Carbohydrate High': daily_carb_high, 
-                              'Fats Low':daily_fat_low, 'Fats High': daily_fat_high }
-                    return render(request, 'm_results.html', {'ans': ans,'range':macro_range})
+                    macro_range = {'Protien Low to High': [daily_protien_low , daily_protien_high],
+                              'Carbohydrate Low to High': [daily_carb_low, daily_carb_high], 
+                              'Fats Low to High':[daily_fat_low, daily_fat_high]}
+                
+                    pro_macro = []
+                    pro_macro.append(macro_range['Protien Low to High'][0:2])
+                    pro_macro.append(macro_range['Carbohydrate Low to High'][0:2])
+                    pro_macro.append(macro_range['Fats Low to High'][0:2])
+                    return render(request, 'm_results.html', {'ans': ans,'range':macro_range, 'new':pro_macro})
 
-            
             ans = round(665.1 + (9.563 * kg) + (1.850 + cm) - (4.676 * Age))
             if [x for x in (protien,carbs,fats) if x == '']:
-                return render(request, 'm_results.html', {'ans': ans,'range':macro_range})
+                return render(request, 'm_results.html', {'ans': ans,'range':macro_range,'new':pro_macro})
             else:
                 Protien = int(protien)
                 Carb= int(carbs)
@@ -107,14 +118,19 @@ def m_results(request):
                 daily_carb_high = carbh - Carb
                 daily_fat_low = fatl - Fat
                 daily_fat_high = fath - Fat
-                macro_range = {'Protien Low': daily_protien_low,'Protien High': daily_protien_high,
-                              'Carbohydrate Low': daily_carb_low, 'Carbohydrate High': daily_carb_high, 
-                              'Fats Low':daily_fat_low, 'Fats High': daily_fat_high }
-                return render(request, 'm_results.html', {'ans': ans,'range':macro_range})
+                macro_range = {'Protien Low to High': [daily_protien_low, daily_protien_high],
+                              'Carbohydrate Low to High': [daily_carb_low, daily_carb_high], 
+                              'Fats Low to High':[daily_fat_low, daily_fat_high]}
+                
+                pro_macro = []
+                pro_macro.append(macro_range['Protien Low to High'][0:2])
+                pro_macro.append(macro_range['Carbohydrate Low to High'][0:2])
+                pro_macro.append(macro_range['Fats Low to High'][0:2])
 
     ans = 'Error Please try again'
     macro_range= {'Na':0}
-    return render(request, 'm_results.html', {'ans': ans,'range':macro_range })
+    pro_macro = []
+    return render(request, 'm_results.html', {'ans': ans,'range':macro_range, 'new':pro_macro})
          
 
 def c_results(request):

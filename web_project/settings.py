@@ -24,14 +24,15 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-jad!=i(y4%71u)_!^1742^iyhs#dxqyu$79)zz%i4($%gqpkht'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
-ALLOWED_HOSTS = [*]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
 SESSION_COOKIE_AGE = 60 * 60 * 24 * 30
 INSTALLED_APPS = [
+    'app.apps.myAppNameConfig',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
