@@ -12,9 +12,13 @@
         <h1>Nuritionix API</h1>
         <ul>
             <form action="{% url 'api-data' %}" style="text-align:center">
+                
+                {% csrf_token %}
                 <label for="food">Please enter a food name or barcode number:</label><br>
-                <input type="text" name="food">
-                <button  type="submit" name="breakdown"> Submit</button> <br/>
+
+                {{form}}
+
+                <button  type="submit"> Submit</button> <br/>
             </form>
         </ul>
     </div>

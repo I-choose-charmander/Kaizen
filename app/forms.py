@@ -56,3 +56,9 @@ class RegisterForm(UserCreationForm):
 class Meta:
     model = User
     fields =['first_name','last_name','username','email','password','password2']
+
+class FoodForm(forms.ModelForm):
+    class Meta:
+        model = Food
+        fields = ('food',)
+    

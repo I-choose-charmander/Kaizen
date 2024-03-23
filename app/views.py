@@ -148,24 +148,43 @@ def c_results(request):
             return render(request, 'c_results.html', {'ans': cal })
 
 def food(request):
-    return render(request,"Food.html")
+    form = FoodForm()
+    return render(request,"Food.html",{'form':form})
 
 def get_api_data(request):
-    query = request.GET.get('food')
+    query = request.POST.get('food')
     api_key = os.getenv('API_KEY_NIX')
     app_id = os.getenv('APP_ID_NIX')
-    url = "https://trackapi.nutritionix.com/v2/search/instant"
+    url = 'https://trackapi.nutritionix.com/v2/natural/nutrients'
     headers={
+            'Content-Type': 'application/json',
             'x-app-id': app_id,
             'x-app-key': api_key,
                 }
-    response = requests.get(url,headers=headers,params={"query": query})
-    if request.GET.get('breakdown') == "":
-        if response.status_code == 200:
-            data = response.json()
-            return render(request, 'display.html', {'data': data})
-        data = 'Request failed with status code {response.status_code}'
+    search = {
+         'query' : query 
+    }
+
+    response = requests.post(url,headers=headers,data=json.dumps(search))
+    if response.status_code == 200:
+        data2 = response.json()
+        for item in data2['foods']:
+             #data.append(item)
+             
+             serving = item['serving_unit']
+             grams = item['serving_weight_grams']
+             calories_of_food = item['nf_calories']
+             fats = item['nf_total_fat']
+             carbo = item['nf_total_carbohydrate']
+             protien = item['nf_protein']
+
+             data = {'Food': query, 'Serving_size': serving, 'Grams':grams,
+                     'Calories': calories_of_food, 'Protien':protien, "Carbohydrates":carbo, 'Fats':fats}
+
+             
         return render(request, 'display.html', {'data': data})
+    error= f'Request failed with status code {response.status_code}'
+    return render(request, 'display.html', {'data': error})
 
 def stock_api_data(request):
         ticker = request.POST.get('ticker', 'null')
