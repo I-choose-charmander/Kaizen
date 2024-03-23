@@ -10,7 +10,7 @@
       );">
         <h1>Alpha Vantage API</h1>
         <ul>
-            <form action="{% url 'stock-api-data' %}">
+            <form action="{% url 'stock-api-data' %}"method="GET">
                 <label>Please enter a stock:</label><br>
                 <input type="text" name="ticker">
                 <button  type="submit"> Submit</button> <br/>

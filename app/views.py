@@ -24,8 +24,10 @@ def finance(request):
 
 def macro(request):
     return render(request,"macro.html")
+
 def calories(request):
-    return render(request,"calories.html")
+    form = CalorieMealForm()
+    return render(request,"calories.html",{'form':form})
 
 def f_results(request):
     income= int(request.GET.get('inc'))
@@ -139,14 +141,12 @@ def c_results(request):
     cal = 0
     protien = int(request.GET.get('protien'))
     fat = int(request.GET.get('fat'))
-    carb = int(request.GET.get('carb'))
-    if request.GET.get('breakdown') == "":
-        if not [x for x in (protien,fat,carb) if x == '']:
-            cal += ((protien * 4) + (fat * 9) + (carb * 4))
-            return render(request, 'c_results.html', {'ans': cal })
-        else:
-            cal = 'Error Please try again'
-            return render(request, 'c_results.html', {'ans': cal })
+    carb = int(request.GET.get('carbohydrate'))
+    if not [x for x in (protien,fat,carb) if x == '']:
+        cal += ((protien * 4) + (fat * 9) + (carb * 4))
+        return render(request, 'c_results.html', {'ans': cal })
+    error = 'Error Please try again'
+    return render(request, 'c_results.html', {'ans': error })
 
 def food(request):
     form = FoodForm()
@@ -188,12 +188,12 @@ def get_api_data(request):
     return render(request, 'display.html', {'data': error})
 
 def stock_api_data(request):
-        ticker = request.POST.get('ticker', 'null')
+        ticker = request.GET.get('ticker', 'null')
         api_key = os.getenv('API_KEY_AFV')
-        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol=KO&interval=5min&apikey={api_key}'
+        url = 'https://www.alphavantage.co/query?function=TIME_SERIES_DAILY&symbol={ticker}&apikey={api_key}'
         response = requests.get(url)
         data = response.json()
-        return render(request, 'display.html',{'data': data})
+        return render(request, 'stock_result.html',{'data': data})
 
 def stock(request):
     return render(request,"stock.html")
