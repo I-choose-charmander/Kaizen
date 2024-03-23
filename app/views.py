@@ -5,7 +5,8 @@ from django.http import HttpResponse
 from django.template import loader
 from django.views.decorators.csrf import csrf_exempt
 from dotenv import load_dotenv
-from .models import macroModel
+from .models import *
+from .forms import *
 
 
 # Create your views here.
